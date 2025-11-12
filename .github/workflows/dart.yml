@@ -2,9 +2,9 @@ name: Dart CI
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   pull_request:
-    branches: [master]
+    branches: [main]
 
 jobs:
   build:
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        sdk: [stable, dev]
+        sdk: ['3.3.0']
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
