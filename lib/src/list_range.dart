@@ -2,11 +2,9 @@ library galileo_utf.list_range;
 
 import 'dart:collection';
 
-/**
- * _ListRange in an internal type used to create a lightweight Interable on a
- * range within a source list. DO NOT MODIFY the underlying list while
- * iterating over it. The results of doing so are undefined.
- */
+/// Lightweight view over a range within a source list.
+///
+/// Do not modify the underlying list while iterating; behavior is undefined.
 // TODO(floitsch): Consider removing the extend and switch to implements since
 // that's cheaper to allocate.
 class ListRange extends IterableBase<int> {
@@ -37,11 +35,7 @@ class ListRange extends IterableBase<int> {
   int get length => _length;
 }
 
-/**
- * The ListRangeIterator provides more capabilities than a standard iterator,
- * including the ability to get the current position, count remaining items,
- * and move forward/backward within the iterator.
- */
+/// Iterator with support for tracking position and skipping within the range.
 abstract class ListRangeIterator implements Iterator<int> {
   @override
   bool moveNext();

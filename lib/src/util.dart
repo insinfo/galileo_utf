@@ -4,9 +4,7 @@ import 'constants.dart';
 import 'list_range.dart';
 import 'utf_16_code_unit_decoder.dart';
 
-/**
- * Decodes the utf16 codeunits to codepoints.
- */
+/// Decodes UTF-16 code units to Unicode code points.
 List<int> utf16CodeUnitsToCodepoints(List<int> utf16CodeUnits,
     [int offset = 0,
     int? length,
@@ -29,9 +27,7 @@ List<int> utf16CodeUnitsToCodepoints(List<int> utf16CodeUnits,
   }
 }
 
-/**
- * Encode code points as UTF16 code units.
- */
+/// Encodes Unicode code points as UTF-16 code units.
 List<int> codepointsToUtf16CodeUnits(List<int> codepoints,
     [int offset = 0,
     int? length,

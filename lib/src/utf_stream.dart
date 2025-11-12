@@ -130,9 +130,7 @@ abstract class _StringDecoder extends StreamTransformerBase<List<int>, String>
   }
 }
 
-/**
- * StringTransformer that decodes a stream of UTF-8 encoded bytes.
- */
+/// Stream transformer that decodes UTF-8 encoded byte chunks into strings.
 class Utf8DecoderTransformer extends _StringDecoder {
   Utf8DecoderTransformer(
       [int replacementChar = UNICODE_REPLACEMENT_CHARACTER_CODEPOINT])
@@ -228,9 +226,7 @@ abstract class _StringEncoder extends StreamTransformerBase<String, List<int>>
   List<int> _processString(String string);
 }
 
-/**
- * StringTransformer that UTF-8 encodes a stream of strings.
- */
+/// Stream transformer that UTF-8 encodes a stream of strings into byte lists.
 class Utf8EncoderTransformer extends _StringEncoder {
   @override
   List<int> _processString(String string) {

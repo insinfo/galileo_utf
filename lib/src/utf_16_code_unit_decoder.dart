@@ -3,12 +3,11 @@ library galileo_utf.utf_16_code_unit_decoder;
 import 'constants.dart';
 import 'list_range.dart';
 
-/**
- * An Iterator<int> of codepoints built on an Iterator of UTF-16 code units.
- * The parameters can override the default Unicode replacement character. Set
- * the replacementCharacter to null to throw an ArgumentError
- * rather than replace the bad value.
- */
+/// An `Iterator<int>` of code points built on an iterator of UTF-16 code units.
+///
+/// The parameters can override the default Unicode replacement character. Set
+/// the replacementCharacter to `null` to throw an [ArgumentError] rather than
+/// replace the bad value.
 class Utf16CodeUnitDecoder implements Iterator<int> {
   // TODO(kevmoo): should this field be private?
   final ListRangeIterator utf16CodeUnitIterator;

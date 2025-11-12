@@ -25,11 +25,10 @@ const int _UTF8_FIRST_BYTE_OF_FOUR_MASK = 0x7;
 const int _UTF8_FIRST_BYTE_BOUND_EXCL = 0xfe;
 const int _UTF8_SUBSEQUENT_BYTE_BASE = 0x80;
 
-/**
- * Decodes the UTF-8 bytes as an iterable. Thus, the consumer can only convert
- * as much of the input as needed. Set the replacementCharacter to null to
- * throw an ArgumentError rather than replace the bad value.
- */
+/// Decodes UTF-8 bytes lazily as an iterable of code points.
+///
+/// Set [replacementCodepoint] to `null` to throw an [ArgumentError] instead of
+/// replacing invalid sequences.
 IterableUtf8Decoder decodeUtf8AsIterable(List<int> bytes,
     [int offset = 0,
     int? length,
@@ -37,13 +36,11 @@ IterableUtf8Decoder decodeUtf8AsIterable(List<int> bytes,
   return IterableUtf8Decoder(bytes, offset, length, replacementCodepoint);
 }
 
-/**
- * Produce a String from a List of UTF-8 encoded bytes. The parameters
- * can set an offset into a list of bytes (as int), limit the length of the
- * values to be decoded, and override the default Unicode replacement character.
- * Set the replacementCharacter to null to throw an ArgumentError
- * rather than replace the bad value.
- */
+/// Converts UTF-8 encoded bytes into a [String].
+///
+/// Supports offset/length windows and configurable replacement behavior. Set
+/// [replacementCodepoint] to `null` to throw an [ArgumentError] instead of
+/// replacing invalid sequences.
 String decodeUtf8(List<int> bytes,
     [int offset = 0,
     int? length,
@@ -52,9 +49,7 @@ String decodeUtf8(List<int> bytes,
       (Utf8Decoder(bytes, offset, length, replacementCodepoint)).decodeRest());
 }
 
-/**
- * Produce a sequence of UTF-8 encoded bytes from the provided string.
- */
+/// Encodes a [String] as UTF-8 bytes.
 List<int> encodeUtf8(String str) => codepointsToUtf8(stringToCodepoints(str));
 
 int _addToEncoding(int offset, int bytes, int value, List<int> buffer) {
@@ -67,9 +62,7 @@ int _addToEncoding(int offset, int bytes, int value, List<int> buffer) {
   return value;
 }
 
-/**
- * Encode code points as UTF-8 code units.
- */
+/// Encodes Unicode code points as UTF-8 code units.
 List<int> codepointsToUtf8(List<int> codepoints,
     [int offset = 0, int? length]) {
   ListRange source = ListRange(codepoints, offset, length);
@@ -128,11 +121,10 @@ List<int> utf8ToCodepoints(List<int> utf8EncodedBytes,
       .decodeRest();
 }
 
-/**
- * Return type of [decodeUtf8AsIterable] and variants. The Iterable type
- * provides an iterator on demand and the iterator will only translate bytes
- * as requested by the user of the iterator. (Note: results are not cached.)
- */
+/// Iterable returned by [decodeUtf8AsIterable] and related helpers.
+///
+/// Creates decoders on demand and translates bytes only as needed. Results are
+/// not cached.
 // TODO(floitsch): Consider removing the extend and switch to implements since
 // that's cheaper to allocate.
 class IterableUtf8Decoder extends IterableBase<int> {
@@ -152,14 +144,11 @@ class IterableUtf8Decoder extends IterableBase<int> {
       Utf8Decoder(bytes, offset, _length, replacementCodepoint);
 }
 
-/**
- * Provides an iterator of Unicode codepoints from UTF-8 encoded bytes. The
- * parameters can set an offset into a list of bytes (as int), limit the length
- * of the values to be decoded, and override the default Unicode replacement
- * character. Set the replacementCharacter to null to throw an
- * ArgumentError rather than replace the bad value. The return value
- * from this method can be used as an Iterable (e.g. in a for-loop).
- */
+/// Provides an iterator of UTF-8 encoded bytes as Unicode code points.
+///
+/// Supports offset/length windows and configurable replacement behavior. Set
+/// [replacementCodepoint] to `null` to throw an [ArgumentError] instead of
+/// replacing invalid sequences. The iterator itself is iterable.
 class Utf8Decoder implements Iterator<int> {
   // TODO(kevmoo): should this field be private?
   final ListRangeIterator utf8EncodedBytesIterator;
@@ -179,9 +168,8 @@ class Utf8Decoder implements Iterator<int> {
       : utf8EncodedBytesIterator = source.iterator,
         replacementCodepoint = replacementCodepoint;
 
-  /** Decode the remaininder of the characters in this decoder
-    * into a [List<int>].
-    */
+  /// Decodes the remaining characters in this decoder into a [List] of code
+  /// points.
   List<int> decodeRest() {
     List<int> codepoints = List<int>.filled(
         utf8EncodedBytesIterator.remaining, 0,

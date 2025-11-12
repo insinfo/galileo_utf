@@ -1,3 +1,6 @@
+## 3.0.0
+- migrate to null safety and dart 3.3.0 
+
 ## 2.0.0
 - update dependencies
 

@@ -1,8 +1,6 @@
 library galileo_utf.constants;
 
-/**
- * Invalid codepoints or encodings may be substituted with the value U+fffd.
- */
+/// Invalid code points or encodings may be substituted with the value U+FFFD.
 const int UNICODE_REPLACEMENT_CHARACTER_CODEPOINT = 0xfffd;
 const int UNICODE_BOM = 0xfeff;
 const int UNICODE_UTF_BOM_LO = 0xff;

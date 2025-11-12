@@ -25,7 +25,7 @@ Add the dependency in your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-	galileo_utf: ^3.0.0
+    galileo_utf: ^3.0.0
 ```
 
 Then install:
@@ -74,10 +74,10 @@ await for (final chunk in stream.transform(Utf8DecoderTransformer())) {
 
 Issues and pull requests are welcome. Please run the formatter,
 analyzer, and test suite locally before opening a PR. By contributing,
-you agree that your work will be licensed under the BSD license included
+you agree that your work will be licensed under the MIT license included
 in this repository.
 
 ## License
 
-BSD 3-Clause. See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE).
 
