@@ -1,0 +1,50 @@
+name: Dart CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    name: Dart ${{ matrix.sdk }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sdk: [stable, dev]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: ${{ matrix.sdk }}
+
+      - name: Cache pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ matrix.sdk }}-${{ hashFiles('pubspec.yaml', 'pubspec.lock') }}
+          restore-keys: |
+            pub-${{ runner.os }}-${{ matrix.sdk }}-
+            pub-${{ runner.os }}-
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Verify formatting
+        run: dart format --output=none --set-exit-if-changed .
+
+      - name: Analyze source
+        run: dart analyze --fatal-infos --fatal-warnings .
+
+      - name: Run VM tests
+        run: dart test
+
+      - name: Run Chrome tests
+        run: dart test --platform chrome -j 1
+        env:
+          CHROME_EXECUTABLE: /usr/bin/google-chrome

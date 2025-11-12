@@ -1,0 +1,13 @@
+name: galileo_utf
+version: 3.0.0
+
+description: Provides common operations for manipulating Unicode sequences
+#author: Isaque Neves <insinfo2008@gmail.com>
+homepage: https://github.com/insinfo/galileo_utf
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dev_dependencies:
+  test: ^1.26.3
+
