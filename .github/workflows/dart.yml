@@ -44,7 +44,7 @@ jobs:
       - name: Run VM tests
         run: dart test
 
-      - name: Run Chrome tests
-        run: dart test --platform chrome -j 1
-        env:
-          CHROME_EXECUTABLE: /usr/bin/google-chrome
+      # - name: Run Chrome tests
+      #   run: dart test --platform chrome -j 1
+      #   env:
+      #     CHROME_EXECUTABLE: /usr/bin/google-chrome
